@@ -1,4 +1,4 @@
-package ru.sendto.ejb;
+package ru.sendto.ejb.interceptor;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -8,6 +8,7 @@ import javax.interceptor.InvocationContext;
 
 import lombok.extern.java.Log;
 import ru.sendto.dto.Dto;
+import ru.sendto.ejb.EventResultsBean;
 
 @Log
 @BundleResult

@@ -1,4 +1,4 @@
-package ru.sendto.ejb;
+package ru.sendto.ejb.interceptor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Inherited;
