@@ -18,25 +18,26 @@ public class BundleResultInterceptor {
 
 	@Inject
 	EventResultsBean bean;
-	
+
 	@AroundInvoke
 	public Object bundle(InvocationContext ic) throws Exception {
 		final Object request = ic.getParameters()[0];
 		Object result = ic.proceed();
-		if(!(result instanceof Dto)){
-			log.warning("result is not assignable from Dto.class. It can`t be returned via rest. "
-					+ic.getTarget().getClass().getName()
-					+"::"
-					+ic.getMethod().getName());
-			return result;
-		} else if(!(request instanceof Dto)){
-			log.warning("param[0] is not assignable from Dto.class. Result can`t be returned via rest. "
-					+ic.getTarget().getClass().getName()
-					+"::"
-					+ic.getMethod().getName());
+		if (!(result instanceof Dto)) {
+			log.fine("result is not assignable from Dto.class. It can`t be returned via rest. "
+					+ ic.getTarget().getClass().getName()
+					+ "::"
+					+ ic.getMethod().getName());
 			return result;
 		}
-		bean.put(((Dto)request), (Dto)result);
+		if (!(request instanceof Dto)) {
+			log.fine("param[0] is not assignable from Dto.class. Result can`t be returned via rest. "
+					+ ic.getTarget().getClass().getName()
+					+ "::"
+					+ ic.getMethod().getName());
+			return result;
+		}
+		bean.put(((Dto) request), (Dto) result);
 		return result;
 	}
 
