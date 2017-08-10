@@ -5,6 +5,7 @@
 package ru.sendto.ejb;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +40,16 @@ public class EventResultsBean {
 			data.put(key, list);
 		}
 		list.add(value);
+	}
+
+
+	public void putAll(Dto key, Collection<Dto> value){
+		List<Dto> list = data.get(key);
+		if(list==null){
+			list=new ArrayList<>();
+			data.put(key, list);
+		}
+		list.addAll(value);
 	}
 	
 	public void clear(Dto key){
