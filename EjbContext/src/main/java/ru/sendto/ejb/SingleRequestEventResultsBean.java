@@ -45,4 +45,8 @@ public class SingleRequestEventResultsBean {
 		get().addAll(collection);
 	}
 	
+	public void clear() {
+		get().clear();
+	}
+	
 }
