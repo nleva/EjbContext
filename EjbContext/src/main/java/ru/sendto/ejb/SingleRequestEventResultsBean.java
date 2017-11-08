@@ -46,7 +46,7 @@ public class SingleRequestEventResultsBean {
 	}
 	
 	public void clear() {
-		get().clear();
+		localList.set(null);
 	}
 	
 }

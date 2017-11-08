@@ -46,7 +46,7 @@ public class RegisterInterceptor {
 			
 		}
 		if(ic.getMethod().getReturnType().isArray() 
-				&& Collection.class.isAssignableFrom(ic.getMethod().getReturnType().getComponentType())) {
+				&& Dto.class.isAssignableFrom(ic.getMethod().getReturnType().getComponentType())) {
 			return putArrayToResults(request, result);
 		}
 		if (!(result instanceof Dto)) {
