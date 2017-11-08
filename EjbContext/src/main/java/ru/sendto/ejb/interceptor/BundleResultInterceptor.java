@@ -13,16 +13,18 @@ import javax.interceptor.InvocationContext;
 
 import lombok.extern.java.Log;
 import ru.sendto.dto.Dto;
-import ru.sendto.ejb.EventResultsBean;
+import ru.sendto.ejb.SingleRequestEventResultsBean;
 
 @Log
-@Register
+@BundleResult
 @Interceptor
 @Priority(2017)
 public class BundleResultInterceptor {
 
+//	@Inject
+//	EventResultsBean bean;
 	@Inject
-	EventResultsBean bean;
+	SingleRequestEventResultsBean plain;
 
 	@AroundInvoke
 	public Object bundle(InvocationContext ic) throws Exception {
@@ -44,7 +46,7 @@ public class BundleResultInterceptor {
 			
 		}
 		if(ic.getMethod().getReturnType().isArray() 
-				&& Collection.class.isAssignableFrom(ic.getMethod().getReturnType().getComponentType())) {
+				&& Dto.class.isAssignableFrom(ic.getMethod().getReturnType().getComponentType())) {
 			return putArrayToResults(request, result);
 		}
 		if (!(result instanceof Dto)) {
@@ -54,20 +56,21 @@ public class BundleResultInterceptor {
 					+ ic.getMethod().getName());
 			return result;
 		}
-		bean.put(((Dto) request), (Dto) result);
+//		bean.put(((Dto) request), (Dto) result);
+		plain.add((Dto)result);
 		return result;
 	}
 
 	private Object putArrayToResults(final Object request, Object result) {
 		final List list = Arrays.asList(result);
-		bean.putAll((Dto)request, list);
+		plain.addAll(list);
 		return result;
 	}
 
 	private Object putListToResults(final Object request, Object result) {
 		Collection c= (Collection) result;
 		List<Dto> dtoList = (List<Dto>) c.stream().filter(e->e instanceof Dto).collect(Collectors.toList());
-		bean.putAll((Dto)request, dtoList);
+		plain.addAll(dtoList);
 		return result;
 	}
 
